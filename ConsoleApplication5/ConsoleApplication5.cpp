@@ -6,7 +6,6 @@
 
 using namespace std;
 
-
 struct delo
 {
     string name;
@@ -18,37 +17,33 @@ struct delo
 void delet(delo* mas, int size, int index)
 {
     bool b = 0;
-    cout << "ви точно хочете видалити:  " << mas[index].name; cin >> b;
+    cout << "Ви точно хочете видалити: " << mas[index].name << "? (1 - так, 0 - ні) ";
+    cin >> b;
     if (b)
     {
-        mas[index].name = '/0';
-
-
+        mas[index].name = "";
     }
 }
-
 
 void wod(delo& d)
 {
     cout << "Введите название задания: "; cin >> d.name;
-    cout << "Введите приоритет задания (от 1 до 10 где 1 наивысший приоритет!):"; cin >> d.prior;
-    cout << "Введите  описание задания: "; cin >> d.ops;
-    cout << "Введите  дату задания в формате день /неделя/месяц "; cin >> d.date;
-
-
+    cout << "Введите приоритет задания (от 1 до 10 где 1 наивысший приоритет!): "; cin >> d.prior;
+    cout << "Введите описание задания: "; cin >> d.ops;
+    cout << "Введите дату задания в формате день/неделя/месяц: "; cin >> d.date;
 }
 
 void edit(delo* mas, int size, int index)
 {
-    if (index > size)
+    if (index >= size) // Changed from > to >=
     {
-        cout << "такого задания не введено" << endl;
+        cout << "Такого задания не введено" << endl;
         return;
     }
-    cout << "Введите новое имя:" << endl; cin >> mas[index].name;
-    cout << "введите новый приоритет:" << endl;cin >> mas[index].prior;
-    cout << "Введите новое описание:" << endl; cin >> mas[index].ops;
-    cout << "Введите новую дату:  в формате день /неделя/месяц  00/00/00 " << endl;  cin >> mas[index].date;
+    cout << "Введите новое имя: "; cin >> mas[index].name;
+    cout << "Введите новый приоритет: "; cin >> mas[index].prior;
+    cout << "Введите новое описание: "; cin >> mas[index].ops;
+    cout << "Введите новую дату в формате день/неделя/месяц: "; cin >> mas[index].date;
 }
 
 int find(delo* mas, int size, int prior, string name = "", string ops = "", string date = "")
@@ -76,70 +71,115 @@ int find(delo* mas, int size, int prior, string name = "", string ops = "", stri
     return -1;
 }
 
-void outo(delo* date)
+void outo(delo* mas, int size)
 {
     string date1 = "";
     int a = 0;
-    int d = 0, n = 0, m = 0;
-    cout << "хотите отобразить все дела на день, на неделю или на месяц? нажмите от 1 до 3:"; cin >> a;
+    cout << "Хотите отобразить все дела на день, на неделю или на месяц? нажмите от 1 до 3: ";
+    cin >> a;
     if (a > 3)
     {
-        cout << "нет такого параметра"  "\n" << "попробуй еще раз"; cin >> a;
-
+        cout << "Нет такого параметра" << "\n" << "Попробуйте еще раз: ";
+        cin >> a;
     }
-    else if (a == 1)
+    else
     {
-        getline(date, date1);
-
-
+        cout << "Введите дату в формате день/неделя/месяц: ";
+        cin >> date1;
+        for (int i = 0; i < size; i++)
+        {
+            if ((a == 1 && mas[i].date.substr(0, 2) == date1.substr(0, 2)) ||
+                (a == 2 && mas[i].date.substr(3, 2) == date1.substr(3, 2)) ||
+                (a == 3 && mas[i].date.substr(6, 2) == date1.substr(6, 2)))
+            {
+                cout << mas[i].name << " " << mas[i].prior << " " << mas[i].ops << " " << mas[i].date << endl;
+            }
+        }
     }
 }
 
-void sort(delo* mas, int size, int prior, string date = "")
-{
 
-}
+
 int main()
 {
     SetConsoleCP(1251);
     SetConsoleOutputCP(1251);
-    string d = 0, t = 0;
+    vector<delo> tasks; 
+    delo tempTask; 
 
-    string name = "";
-    int prior = 1;
-    string ops = "";
-    string date = "";
     short menu = -1;
     do
     {
-        cout << "MENU";
+        cout << "MENU" << endl;
         cout << "1 - Ввести новую задачу;" << endl;
         cout << "2 - Удалить задачу;" << endl;
-        cout << "3 - редактировать задание;" << endl;
-        cout << "4 - найти задание;" << endl;
-        cout << "5 - вывести на экран задания;" << endl;
-        cout << "6 - отсортировать задания;" << endl;
-        cout << "Оберіть пункт меню: " << endl;
+        cout << "3 - Редактировать задание;" << endl;
+        cout << "4 - Найти задание;" << endl;
+        cout << "5 - Вывести на экран задания;" << endl;
+        cout << "6 - Отсортировать задания;" << endl;
+        cout << "Оберіть пункт меню: ";
         cin >> menu;
-        system("cls");
+        system("cls"); // 
+        int index = 0;
+
         switch (menu)
         {
         case 1:
-
-            wod();
-
+            wod(tempTask);
+            tasks.push_back(tempTask);
             break;
         case 2:
-            delet();
-
+            cout << "Введите индекс задачи для удаления: ";
+            cin >> index;
+            if (index >= 0 && index < tasks.size())
+            {
+                delet(tasks.data(), tasks.size(), index);
+            }
+            else
+            {
+                cout << "Неверный индекс" << endl;
+            }
             break;
         case 3:
-            edit();
+            cout << "Введите индекс задачи для редактирования: ";
+            cin >> index;
+            if (index >= 0 && index < tasks.size())
+            {
+                edit(tasks.data(), tasks.size(), index);
+            }
+            else
+            {
+                cout << "Неверный индекс" << endl;
+            }
+            break;
         case 4:
-            find();
-
+            int prior;
+            string name, ops, date;
+            cout << "Введите приоритет (или -1 для пропуска): ";
+            cin >> prior;
+            cout << "Введите имя (или пустую строку для пропуска): ";
+            cin.ignore();
+            getline(cin, name);
+            cout << "Введите описание (или пустую строку для пропуска): ";
+            getline(cin, ops);
+            cout << "Введите дату (или пустую строку для пропуска): ";
+            getline(cin, date);
+            index = find(tasks.data(), tasks.size(), prior, name, ops, date);
+            if (index != -1)
+            {
+                cout << "Найдено задание: " << tasks[index].name << " " << tasks[index].prior << " " << tasks[index].ops << " " << tasks[index].date << endl;
+            }
+            break;
         case 5:
-            outo();
+            outo(tasks.data(), tasks.size());
+            break;
+        case 6:
+            // sort(tasks.data(), tasks.size(), prior, date);
+            break;
+        default:
+            cout << "Неверный пункт меню" << endl;
         }
-    } while;
+    } while (menu != 0); // Corrected the loop condition
+
+    return 0;
 }

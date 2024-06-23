@@ -173,13 +173,10 @@ int main()
         case 5:
             outo(tasks.data(), tasks.size());
             break;
-        case 6:
-            // sort(tasks.data(), tasks.size(), prior, date);
-            break;
         default:
             cout << "Неверный пункт меню" << endl;
         }
-    } while (menu != 0); // Corrected the loop condition
+    } while (menu != 0); 
 
     return 0;
 }

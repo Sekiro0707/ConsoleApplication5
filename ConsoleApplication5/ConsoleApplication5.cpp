@@ -1,4 +1,4 @@
-﻿#include <Windows.h>
+#include <Windows.h>
 #include <iostream>
 #include <vector>
 #include <string>
@@ -18,7 +18,7 @@ struct delo
 void delet(delo* mas, int size, int index)
 {
     bool b = 0;
-    cout << "вы точно хотите удалить:  " << mas[index].name; cin >> b;
+    cout << "ви точно хочете видалити:  " << mas[index].name; cin >> b;
     if (b)
     {
         mas[index].name = '/0';
@@ -87,7 +87,7 @@ void outo(delo* date)
         cout << "нет такого параметра"  "\n" << "попробуй еще раз"; cin >> a;
 
     }
-    else if (a = 1)
+    else if (a == 1)
     {
         getline(date, date1);
 
@@ -140,8 +140,6 @@ int main()
 
         case 5:
             outo();
-        case 6:
-            sort();
-
         }
-    }
+    } while;
+}

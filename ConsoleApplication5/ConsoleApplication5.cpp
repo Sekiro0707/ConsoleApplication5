@@ -98,6 +98,7 @@ int main() {
 
     short menu = -1;
     do {
+        cout << "Список справ" <<endl;
         cout << "MENU" << endl;
         cout << "1 - Ввести новую задачу;" << endl;
         cout << "2 - Удалить задачу;" << endl;
